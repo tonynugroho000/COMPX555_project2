@@ -73,7 +73,9 @@ def get_NTL(peptide):
 def main():
     global df_acids
     df_acids = pd.read_csv('amino_acid_properties.csv', sep=',', header=0, names=('aminoAcid', 'abbreviation', 'hydrophobicity', 'volume', 'chemical', 'physicochemical',  'charge', 'polarity', 'hydrogenDonor'))
-    df = pd.read_csv('mhc2023.txt', delim_whitespace=True, names=['bind', 'peptide'])
+    df = pd.read_csv('mhc2023.txt', delim_whitespace=True, names=['bind', 'peptide'], dtype=str)
+
+    df['bind'] = df['bind'].replace({'0': False, '1': True})
 
     df['length'] = df['peptide'].apply(lambda x: len(x))
     df['hydrophobicity'] = df['peptide'].apply(get_hydrophobicity)
